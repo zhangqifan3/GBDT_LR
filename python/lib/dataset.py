@@ -10,6 +10,10 @@ from lib.read_conf import Config
 
 
 class DataSet(object):
+    '''
+    DataSet class
+    处理输入数据
+    '''
     def __init__(self, data_file):
         self._conf = Config()
         self._data_file = data_file
@@ -20,6 +24,12 @@ class DataSet(object):
         self._csv_defaults = self._column_to_csv_defaults()
 
     def _column_to_csv_defaults(self):
+        '''
+        定义输入数据类型，获取数据特征名
+        :return:
+            all_columns：数据每一列对应的名称 type：list
+            csv_defaults：csv默认数据类型 ['feature name': [''],...]
+        '''
         features = []
         for i in range(1, len(self._all_features) + 1):
             features.append(self._all_features[str(i)])
@@ -41,11 +51,12 @@ class DataSet(object):
         return all_columns, csv_defaults
 
     def iter_minibatches(self):
-        """
-        迭代器
-        给定文件流（比如一个大文件），每次输出minibatch_size行
-        将输出转化成dataframe输出
-        """
+        '''
+        迭代器,给定文件流（比如一个大文件），每次输出minibatch_size行
+        :return:
+            将输出转化成dataframe输出
+        '''
+
         cur_line_num = 0
         dataset = []
         csvfile = open(self._data_file, 'rt',encoding="utf-8")
@@ -66,6 +77,11 @@ class DataSet(object):
         csvfile.close()
 
     def input_fn(self):
+        '''
+        读取csv文件，转化为dataframe，填充nan值
+        :return:
+            dataset
+        '''
         all_columns, csv_defaults = self._csv_defaults
         dataset = pd.read_csv(self._data_file, sep=' ',names =all_columns, dtype = csv_defaults)
         dataset = dataset.fillna('-')

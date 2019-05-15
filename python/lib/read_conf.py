@@ -25,6 +25,11 @@ class Config(object):
         self._feature_conf_file = os.path.join(BASE_DIR, feature_conf_file)
 
     def read_schema_conf(self):
+        '''
+        读取schema_conf内容
+        :return:
+            All_features：{'1'：'feature name', ...}
+        '''
         conf = configparser.ConfigParser()
         conf.read(self._schema_conf_file)
         secs = conf.sections()
@@ -33,6 +38,12 @@ class Config(object):
         return All_features
 
     def read_feature_conf(self):
+        '''
+        读取feature_conf内容
+        :return:
+            feature_conf_dic：{'feature name'：{}，...}
+            secs: ['feature name', ...]
+        '''
         conf = configparser.ConfigParser()
         conf.read(self._feature_conf_file)
         secs = conf.sections()
@@ -44,6 +55,11 @@ class Config(object):
         return feature_conf_dic, secs
 
     def read_model_conf(self):
+        '''
+        读取model_conf内容
+        :return:
+            model_conf_dic
+        '''
         conf = configparser.ConfigParser()
         conf.read(self._model_conf_file)
         secs = conf.sections()

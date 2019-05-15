@@ -12,6 +12,10 @@ from lib.GBDT import GBDT_spr
 MODEL_DIR = os.path.join(dirname(dirname(dirname(abspath(__file__)))), 'model')
 
 class LR(object):
+    '''
+    LR class
+    LR模型训练，预测
+    '''
     def __init__(self, data_file, mode):
         self._conf = Config()
         self.lr_conf = self._conf.read_model_conf()['lr_conf']
@@ -20,6 +24,10 @@ class LR(object):
         self._gbdt_spr = GBDT_spr(self._data_file)
 
     def lr_model(self):
+        '''
+        lr模型训练及预测
+        :return: AUC
+        '''
         if self._mode == 'train':
             gbdt_features, y_label = self._gbdt_spr.gbdt_model(self._mode)
             grd_lm = LogisticRegression(penalty = self.lr_conf['penalty'],
