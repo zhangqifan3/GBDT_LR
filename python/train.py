@@ -6,8 +6,8 @@ def main():
     if model_conf['mode'] == 'train':
         train1 = LR(model_conf['data_dir_train'],mode = 'train').lr_model()
     else:
-        pred1 = LR(model_conf['data_dir_pred'],mode = 'pred').lr_model()
-
-        print(pred1)
+        Accuracy, AUC = LR(model_conf['data_dir_pred'],mode = 'pred').lr_model()
+        print("LR_Accuracy: %f" % Accuracy)
+        print("LR_AUC: %f" % AUC)
 if __name__ == '__main__':
     main()
