@@ -4,8 +4,8 @@ import csv
 import numpy as np
 import pandas as pd
 PACKAGE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-print(PACKAGE_DIR)
 sys.path.insert(0, PACKAGE_DIR)
+
 from lib.read_conf import Config
 
 
