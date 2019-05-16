@@ -1,22 +1,20 @@
 import sys
 import os
 from os.path import dirname, abspath
-from sklearn_pandas import DataFrameMapper
+PACKAGE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, PACKAGE_DIR)
 
+from sklearn_pandas import DataFrameMapper
 from sklearn.feature_extraction.text import CountVectorizer as multivalue
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.preprocessing import OneHotEncoder
-from sklearn.externals import joblib
-import numpy as np
-
 from sklearn.preprocessing import Normalizer
 from sklearn.preprocessing import StandardScaler as standard
 from sklearn.preprocessing import MinMaxScaler as min_max
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import LabelBinarizer as one_hot
-PACKAGE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-print(PACKAGE_DIR)
-sys.path.insert(0, PACKAGE_DIR)
+from sklearn.externals import joblib
+import numpy as np
 
 MODEL_DIR = os.path.join(dirname(dirname(dirname(abspath(__file__)))), 'model')
 from lib.read_conf import Config
