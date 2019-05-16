@@ -31,7 +31,8 @@ class LR(object):
         if self._mode == 'train':
             gbdt_features, y_label = self._gbdt_spr.gbdt_model(self._mode)
             grd_lm = LogisticRegression(penalty = self.lr_conf['penalty'],
-                                        C = float(self.lr_conf['C']))
+                                        solver = self.lr_conf['solver'],
+                                        C = float(self.lr_conf['c']))
             grd_lm.fit(gbdt_features, y_label)
             joblib.dump(grd_lm, os.path.join(MODEL_DIR, "lr_model.m"))
 
@@ -40,13 +41,13 @@ class LR(object):
             grd_lm = joblib.load(os.path.join(MODEL_DIR, "lr_model.m"))
 
             y_pred_grd_lm = grd_lm.predict_proba(gbdt_features)[:, 1]
-
+            pred_res = grd_lm.predict(gbdt_features)
             fpr_grd_lm, tpr_grd_lm, _ = metrics.roc_curve(y_label, y_pred_grd_lm)
             roc_auc = metrics.auc(fpr_grd_lm, tpr_grd_lm)
             AUC_Score = metrics.roc_auc_score(y_label, y_pred_grd_lm)
-            return roc_auc
+            return roc_auc, pred_res
 if __name__ == '__main__':
-    train1 = LR('D:\\code\\GBDT_LR\\data\\test.csv',mode = 'pred').lr_model()
+    train1 = LR('D:\\code\\GBDT_LR\\data\\test.csv',mode = 'train').lr_model()
     print(train1)
 
 
